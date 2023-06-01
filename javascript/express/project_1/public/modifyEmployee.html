@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form name="myForm" method="post" >
+        
+        <h1>Modify An Employee:</h1>
+        Name:   
+        <input type="input" value="" name="name" id="name">
+        <p>
+        Surname:
+        <input type="input" value="" name="surname" id="surname">
+        <p>
+        Position:    
+        <input type="input" value="" name="position" id="position">
+        <p>
+        Id:    
+        <input type="input" value="" name="idemployees" id="idemployees">
+        <p>
+        <input type="submit" value="Save Changes" id="submitButt">
+        <p>
+        <p id="responseMessage"></p>
+        
+    </form>
+
+    <script>
+        //There are no built in PUT and DELETE methods for forms.
+            document.getElementById("submitButt").addEventListener("click", function (event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const surname = document.getElementById("surname").value;
+            const position = document.getElementById("position").value;
+            const idemployees = document.getElementById("idemployees").value;
+            const data = { name, surname, position, idemployees };
+            fetch('/modify', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("responseMessage").innerHTML = data.message;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+    </script>
+
+</body>
+</html>
